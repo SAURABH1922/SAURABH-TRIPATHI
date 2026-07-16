@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M — Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEBE3;
+    --paper-2:#E3E0D5;
+    --ink:#17140F;
+    --cobalt:#1D3FE0;
+    --signal:#FF2D5F;
+    --grey:#8B8778;
+    --line: rgba(23,20,15,0.16);
+  }
+  *{box-sizing:border-box;}
+  ::selection{ background:var(--cobalt); color:var(--paper); }
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{ font-family:'Space Mono', monospace; }
+  a{color:inherit;}
+
+  /* registration marks */
+  .reg{
+    position:fixed; width:22px; height:22px; z-index:50; pointer-events:none;
+    opacity:0.55;
+  }
+  .reg::before, .reg::after{
+    content:""; position:absolute; background:var(--ink);
+  }
+  .reg::before{ width:100%; height:1px; top:50%; left:0; }
+  .reg::after{ width:1px; height:100%; left:50%; top:0; }
+  .reg-tl{ top:14px; left:14px; }
+  .reg-tr{ top:14px; right:14px; }
+  .reg-bl{ bottom:14px; left:14px; }
+  .reg-br{ bottom:14px; right:14px; }
+  .reg span{
+    position:absolute; top:50%; left:50%; width:10px; height:10px;
+    border:1px solid var(--ink); border-radius:50%; transform:translate(-50%,-50%);
+  }
+
+  /* job ticket bar */
+  .ticket{
+    position:sticky; top:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 40px;
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .ticket .status{ display:flex; align-items:center; gap:8px; color:var(--cobalt); }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--cobalt); animation:pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+  .ticket-left{ display:flex; gap:28px; }
+  @media (max-width:640px){ .ticket-left span:nth-child(2){display:none;} .ticket{padding:12px 20px;} }
+
+  main{ padding:0 40px; }
+  @media (max-width:640px){ main{padding:0 20px;} }
+
+  section{ padding:96px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  /* hero */
+  .hero{ padding-top:64px; text-align:center; position:relative; }
+  .hero-eyebrow{
+    font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--grey); margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(140px, 34vw, 400px);
+    line-height:0.8;
+    margin:0;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .hero-role{
+    font-family:'Work Sans', sans-serif; font-weight:600;
+    font-size:clamp(17px, 2.4vw, 24px);
+    margin-top:8px;
+  }
+  .hero-role .accent{ color:var(--cobalt); }
+  .hero-sub{
+    max-width:520px; margin:20px auto 0; color:var(--grey); font-size:15px; line-height:1.6;
+  }
+  .swatch-strip{
+    display:flex; justify-content:center; gap:6px; margin-top:44px; flex-wrap:wrap;
+  }
+  .strip-chip{ width:26px; height:26px; border:1px solid var(--line); }
+
+  /* section headers */
+  .sec-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:44px; flex-wrap:wrap; gap:10px;
+  }
+  .sec-head h2{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(28px, 4vw, 44px);
+    margin:0; text-transform:uppercase; letter-spacing:-0.01em;
+  }
+  .sec-num{ font-family:'Space Mono', monospace; font-size:12px; color:var(--grey); }
+
+  /* work grid: pantone chips */
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:20px;
+  }
+  .chip{
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    cursor:pointer;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    outline-offset:2px;
+  }
+  .chip:hover, .chip:focus-visible{ transform:translateY(-4px); box-shadow:0 14px 26px -18px rgba(23,20,15,0.5); }
+  .chip-color{ height:150px; position:relative; }
+  .chip-info{ padding:16px 18px 18px; border-top:1px solid var(--line); }
+  .chip-name{ font-weight:600; font-size:15px; margin-bottom:6px; }
+  .chip-meta{ font-family:'Space Mono', monospace; font-size:11px; color:var(--grey); letter-spacing:0.02em; }
+  .chip-desc{
+    font-size:13px; color:var(--ink); line-height:1.5; margin-top:10px;
+    max-height:0; opacity:0; overflow:hidden; transition:max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  .chip.open .chip-desc{ max-height:120px; opacity:1; }
+  .chip-code{
+    position:absolute; bottom:8px; right:10px; font-family:'Space Mono',monospace;
+    font-size:11px; color:rgba(255,255,255,0.85); mix-blend-mode:difference;
+  }
+
+  /* about / specs */
+  .specs{ display:grid; grid-template-columns:1.1fr 1fr; gap:60px; }
+  @media (max-width:800px){ .specs{ grid-template-columns:1fr; gap:40px; } }
+  .specs p{ font-size:17px; line-height:1.75; color:var(--ink); }
+  .specs .lead{ font-size:20px; font-weight:600; margin-bottom:18px; }
+  .materials-list{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+  .materials-list li{
+    display:flex; justify-content:space-between; padding:13px 0;
+    border-bottom:1px solid var(--line); font-family:'Space Mono', monospace; font-size:13px;
+  }
+  .materials-list li span:last-child{ color:var(--grey); }
+
+  /* approval / contact */
+  .approval{
+    display:grid; grid-template-columns:1fr auto; align-items:end; gap:40px;
+  }
+  @media (max-width:700px){ .approval{ grid-template-columns:1fr; } }
+  .approval h2{
+    font-family:'Archivo Black', sans-serif; font-size:clamp(32px,6vw,64px);
+    line-height:1.02; margin:0 0 20px; text-transform:uppercase;
+  }
+  .approval-links{ display:flex; gap:24px; flex-wrap:wrap; font-family:'Space Mono',monospace; font-size:13px; }
+  .approval-links a{ text-decoration:none; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  .approval-links a:hover{ color:var(--cobalt); border-color:var(--cobalt); }
+  .stamp{
+    border:2px solid var(--signal); color:var(--signal);
+    font-family:'Space Mono', monospace; font-weight:700; text-transform:uppercase;
+    padding:16px 22px; transform:rotate(-4deg); font-size:14px; letter-spacing:0.06em;
+    white-space:nowrap;
+  }
+
+  footer{
+    padding:24px 40px 40px; display:flex; justify-content:space-between;
+    font-family:'Space Mono', monospace; font-size:11px; color:var(--grey);
+    text-transform:uppercase; letter-spacing:0.04em; flex-wrap:wrap; gap:8px;
+  }
+
+  button.cta{
+    font-family:'Space Mono', monospace; background:var(--ink); color:var(--paper);
+    border:none; padding:14px 26px; font-size:13px; text-transform:uppercase;
+    letter-spacing:0.06em; cursor:pointer; transition:background 0.2s ease;
+  }
+  button.cta:hover, button.cta:focus-visible{ background:var(--cobalt); }
+</style>
+</head>
+<body>
+
+<div class="reg reg-tl"><span></span></div>
+<div class="reg reg-tr"><span></span></div>
+<div class="reg reg-bl"><span></span></div>
+<div class="reg reg-br"><span></span></div>
+
+<div class="ticket">
+  <div class="ticket-left">
+    <span>JOB NO. 0412—M</span>
+    <span>STOCK: BOND 120GSM</span>
+  </div>
+  <div class="status"><span class="dot"></span> AVAILABLE FOR PROJECTS</div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Graphic Designer — Est. proof 2019</div>
+    <h1>M</h1>
+    <div class="hero-role">Identity <span class="accent">·</span> Editorial <span class="accent">·</span> Packaging <span class="accent">·</span> Motion</div>
+    <p class="hero-sub">Every brief starts as a blank sheet and ends as a fixed impression. I build identity systems that hold up from a business card to a billboard, and I sweat the registration.</p>
+    <div class="swatch-strip" aria-hidden="true">
+      <div class="strip-chip" style="background:#1D3FE0"></div>
+      <div class="strip-chip" style="background:#FF2D5F"></div>
+      <div class="strip-chip" style="background:#17140F"></div>
+      <div class="strip-chip" style="background:#C9C4B4"></div>
+      <div class="strip-chip" style="background:#F2A73B"></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <h2>Selected Work</h2>
+      <span class="sec-num mono">05 SWATCHES — TAP TO OPEN</span>
+    </div>
+    <div class="grid" id="chipGrid"></div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <h2>Specs</h2>
+      <span class="sec-num mono">JOB TICKET — ABOUT</span>
+    </div>
+    <div class="specs">
+      <div>
+        <p class="lead">I'm M — a graphic designer who thinks in grids, kerning, and paper stock.</p>
+        <p>Seven years in, I've moved from freelance flyers to full identity systems for restaurants, record labels, and startups that wanted to look like they'd been around longer than they had. I care less about trends and more about whether a mark still works at 12 pixels and in one color of ink.</p>
+        <p>Studio is small on purpose — every project gets full attention, from first sketch to final press check.</p>
+      </div>
+      <ul class="materials-list">
+        <li><span>Software</span><span>Illustrator, InDesign, Figma, After Effects</span></li>
+        <li><span>Specialties</span><span>Identity systems, editorial layout, packaging</span></li>
+        <li><span>Process</span><span>Sketch → grid → proof → press</span></li>
+        <li><span>Turnaround</span><span>2–6 week engagements</span></li>
+        <li><span>Based</span><span>Remote, worldwide clients</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="approval">
+      <div>
+        <h2>Let's put it<br>into proof.</h2>
+        <div class="approval-links">
+          <a href="mailto:hello@m-design.studio">hello@m-design.studio</a>
+          <a href="#" onclick="return false;">Instagram ↗</a>
+          <a href="#" onclick="return false;">Portfolio PDF ↗</a>
+        </div>
+      </div>
+      <div class="stamp">Approved for<br>new work</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2026 M — Graphic Design Studio</span>
+  <span>Printed digitally, no plates were harmed</span>
+</footer>
+
+<script>
+  const projects = [
+    { name:"Reflex — Restaurant Identity", color:"#1D3FE0", code:"PMS 286 C", meta:"Branding / Signage / Menus",
+      desc:"Full identity system for a downtown bistro: wordmark, print menus, and exterior signage built off one recurring plate motif." },
+    { name:"Field Notes — Editorial", color:"#FF2D5F", code:"PMS 219 C", meta:"Magazine / Layout / Type",
+      desc:"A quarterly culture magazine redesign: new grid, custom display type pairing, and a cover system that rotates by season." },
+    { name:"Low Static — Record Label", color:"#17140F", code:"PMS Black C", meta:"Logo / Packaging / Merch",
+      desc:"Logotype and vinyl sleeve system for an independent label, built to survive screen printing at small run sizes." },
+    { name:"Groundwork — Startup Identity", color:"#C9C4B4", code:"PMS 400 C", meta:"Identity / Web / Deck",
+      desc:"Brand identity and pitch deck template for an early-stage agtech startup, designed to scale from seed round to Series A." },
+    { name:"Amber Route — Packaging", color:"#F2A73B", code:"PMS 143 C", meta:"Packaging / Print Production",
+      desc:"Retail packaging suite for a small-batch honey brand, including die-line design and a two-spot-color print run." }
+  ];
+
+  const grid = document.getElementById('chipGrid');
+  projects.forEach((p, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.tabIndex = 0;
+    chip.setAttribute('role','button');
+    chip.setAttribute('aria-expanded','false');
+    chip.innerHTML = `
+      <div class="chip-color" style="background:${p.color}">
+        <span class="chip-code">${p.code}</span>
+      </div>
+      <div class="chip-info">
+        <div class="chip-name">${p.name}</div>
+        <div class="chip-meta">${p.meta}</div>
+        <div class="chip-desc">${p.desc}</div>
+      </div>`;
+    const toggle = () => {
+      const isOpen = chip.classList.toggle('open');
+      chip.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+    chip.addEventListener('click', toggle);
+    chip.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+    grid.appendChild(chip);
+  });
+</script>
+
+</body>
+</html>
